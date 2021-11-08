@@ -100,6 +100,7 @@ AUTOBUILD_BOARDS = ["fmuv2",
                     "obal",
                     "modalai_fc-v1",
                     "AIRLink",
+                    "Pixhawk5X",
                     # SITL targets
                     "SITL_x86_64_linux_gnu",
                     "SITL_arm_linux_gnueabihf",

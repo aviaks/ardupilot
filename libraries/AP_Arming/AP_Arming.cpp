@@ -686,6 +686,15 @@ bool AP_Arming::rc_calibration_checks(bool report)
     return check_passed;
 }
 
+bool AP_Arming::rc_in_calibration_check(bool report)
+{
+    if (rc().calibrating()) {
+        check_failed(ARMING_CHECK_RC, report, "RC calibrating");
+        return false;
+    }
+    return true;
+}
+
 bool AP_Arming::manual_transmitter_checks(bool report)
 {
     if ((checks_to_perform & ARMING_CHECK_ALL) ||
@@ -701,7 +710,7 @@ bool AP_Arming::manual_transmitter_checks(bool report)
         }
     }
 
-    return true;
+    return rc_in_calibration_check(report);
 }
 
 bool AP_Arming::mission_checks(bool report)
@@ -1331,6 +1340,11 @@ bool AP_Arming::arm_checks(AP_Arming::Method method)
     return true;
 }
 
+bool AP_Arming::mandatory_checks(bool report)
+{
+    return rc_in_calibration_check(report);
+}
+
 //returns true if arming occurred successfully
 bool AP_Arming::arm(AP_Arming::Method method, const bool do_arming_checks)
 {
@@ -1348,6 +1362,25 @@ bool AP_Arming::arm(AP_Arming::Method method, const bool do_arming_checks)
         armed = false;
     }
 
+#if HAL_LOGGER_FILE_CONTENTS_ENABLED
+    /*
+      log files useful for diagnostics on arming. We log on arming as
+      with LOG_DISARMED we don't want to log the statistics at boot or
+      we wouldn't get a realistic idea of key system values
+      Note that some of these files may not exist, in that case they
+      are ignored
+     */
+    static const char *log_content_filenames[] = {
+        "@SYS/uarts.txt",
+        "@SYS/dma.txt",
+        "@SYS/memory.txt",
+        "@SYS/threads.txt",
+        "@ROMFS/hwdef.dat",
+    };
+    for (const auto *name : log_content_filenames) {
+        AP::logger().log_file_content(name);
+    }
+#endif
     return armed;
 }
 

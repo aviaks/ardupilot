@@ -22,26 +22,26 @@
 
 #define AP_MOTORS_MAX_NUM_MOTORS 12
 
-#ifndef FRAME_QUAD
-#define FRAME_QUAD 1
+#ifndef AP_MOTORS_FRAME_QUAD_ENABLED
+#define AP_MOTORS_FRAME_QUAD_ENABLED 1
 #endif
-#ifndef FRAME_HEXA
-#define FRAME_HEXA 1
+#ifndef AP_MOTORS_FRAME_HEXA_ENABLED
+#define AP_MOTORS_FRAME_HEXA_ENABLED 1
 #endif
-#ifndef FRAME_OCTA
-#define FRAME_OCTA 1
+#ifndef AP_MOTORS_FRAME_OCTA_ENABLED
+#define AP_MOTORS_FRAME_OCTA_ENABLED 1
 #endif
-#ifndef FRAME_DECA
-#define FRAME_DECA 1
+#ifndef AP_MOTORS_FRAME_DECA_ENABLED
+#define AP_MOTORS_FRAME_DECA_ENABLED 1
 #endif
-#ifndef FRAME_DODECAHEXA
-#define FRAME_DODECAHEXA 1
+#ifndef AP_MOTORS_FRAME_DODECAHEXA_ENABLED
+#define AP_MOTORS_FRAME_DODECAHEXA_ENABLED 1
 #endif
-#ifndef FRAME_Y6
-#define FRAME_Y6 1
+#ifndef AP_MOTORS_FRAME_Y6_ENABLED
+#define AP_MOTORS_FRAME_Y6_ENABLED 1
 #endif
-#ifndef FRAME_OCTAQUAD
-#define FRAME_OCTAQUAD 1
+#ifndef AP_MOTORS_FRAME_OCTAQUAD_ENABLED
+#define AP_MOTORS_FRAME_OCTAQUAD_ENABLED 1
 #endif
 
 // motor update rate
@@ -92,6 +92,7 @@ public:
         MOTOR_FRAME_TYPE_NYT_PLUS = 16, // plus frame, no differential torque for yaw
         MOTOR_FRAME_TYPE_NYT_X = 17, // X frame, no differential torque for yaw
         MOTOR_FRAME_TYPE_BF_X_REV = 18, // X frame, betaflight ordering, reversed motors
+        MOTOR_FRAME_TYPE_Y4 = 19, //Y4 Quadrotor frame
     };
 
     // return string corresponding to frame_type

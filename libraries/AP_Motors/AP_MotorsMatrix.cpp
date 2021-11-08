@@ -585,7 +585,7 @@ void AP_MotorsMatrix::setup_motors(motor_frame_class frame_class, motor_frame_ty
     bool success = true;
 
     switch (frame_class) {
-#if FRAME_QUAD
+#if AP_MOTORS_FRAME_QUAD_ENABLED
         case MOTOR_FRAME_QUAD:
             _frame_class_string = "QUAD";
             _mav_type = MAV_TYPE_QUADROTOR;
@@ -765,6 +765,17 @@ void AP_MotorsMatrix::setup_motors(motor_frame_class frame_class, motor_frame_ty
                     add_motors(motors, ARRAY_SIZE(motors));
                     break;
                 }
+                case MOTOR_FRAME_TYPE_Y4:
+                    _frame_type_string = "Y4";
+                    // Y4 motor definition with right front CCW, left front CW
+                    static const AP_MotorsMatrix::MotorDefRaw motors[] {
+                        { -1.0f,  1.000f, AP_MOTORS_MATRIX_YAW_FACTOR_CCW, 1 },
+                        {  0.0f, -1.000f, AP_MOTORS_MATRIX_YAW_FACTOR_CW,  2 },
+                        {  0.0f, -1.000f, AP_MOTORS_MATRIX_YAW_FACTOR_CCW, 3 },
+                        {  1.0f,  1.000f, AP_MOTORS_MATRIX_YAW_FACTOR_CW,  4 },
+                    };
+                    add_motors_raw(motors, ARRAY_SIZE(motors));
+                    break;
                 default:
                     // quad frame class does not support this frame type
                     _frame_type_string = "UNSUPPORTED";
@@ -772,8 +783,8 @@ void AP_MotorsMatrix::setup_motors(motor_frame_class frame_class, motor_frame_ty
                     break;
             }
             break;  // quad
-#endif //FRAME_QUAD
-#if FRAME_HEXA
+#endif //AP_MOTORS_FRAME_QUAD_ENABLED
+#if AP_MOTORS_FRAME_HEXA_ENABLED
         case MOTOR_FRAME_HEXA:
             _frame_class_string = "HEXA";
             _mav_type = MAV_TYPE_HEXAROTOR;
@@ -851,8 +862,8 @@ void AP_MotorsMatrix::setup_motors(motor_frame_class frame_class, motor_frame_ty
                     break;
             }
             break;
-#endif //FRAME_HEXA
-#if FRAME_OCTA
+#endif //AP_MOTORS_FRAME_HEXA_ENABLED
+#if AP_MOTORS_FRAME_OCTA_ENABLED
         case MOTOR_FRAME_OCTA:
             _frame_class_string = "OCTA";
             _mav_type = MAV_TYPE_OCTOROTOR;
@@ -970,8 +981,8 @@ void AP_MotorsMatrix::setup_motors(motor_frame_class frame_class, motor_frame_ty
                     break;
             } // octa frame type
             break;
-#endif //FRAME_OCTA
-#if FRAME_OCTAQUAD
+#endif //AP_MOTORS_FRAME_OCTA_ENABLED
+#if AP_MOTORS_FRAME_OCTAQUAD_ENABLED
         case MOTOR_FRAME_OCTAQUAD:
             _mav_type = MAV_TYPE_OCTOROTOR;
             _frame_class_string = "OCTAQUAD";
@@ -1058,8 +1069,8 @@ void AP_MotorsMatrix::setup_motors(motor_frame_class frame_class, motor_frame_ty
                     break;
             }
             break;
-#endif //FRAME_OCTAQUAD
-#if FRAME_DODECAHEXA
+#endif //AP_MOTORS_FRAME_OCTAQUAD_ENABLED
+#if AP_MOTORS_FRAME_DODECAHEXA_ENABLED
         case MOTOR_FRAME_DODECAHEXA: {
             _mav_type = MAV_TYPE_DODECAROTOR;
             _frame_class_string = "DODECAHEXA";
@@ -1109,8 +1120,8 @@ void AP_MotorsMatrix::setup_motors(motor_frame_class frame_class, motor_frame_ty
                     break;
             }}
             break;
-#endif //FRAME_DODECAHEXA
-#if FRAME_Y6
+#endif //AP_MOTORS_FRAME_DODECAHEXA_ENABLED
+#if AP_MOTORS_FRAME_Y6_ENABLED
         case MOTOR_FRAME_Y6:
             _mav_type = MAV_TYPE_HEXAROTOR;
             _frame_class_string = "Y6";
@@ -1158,8 +1169,8 @@ void AP_MotorsMatrix::setup_motors(motor_frame_class frame_class, motor_frame_ty
                 }
             }
             break;
-#endif //FRAME_Y6
-#if FRAME_DECA
+#endif //AP_MOTORS_FRAME_Y6_ENABLED
+#if AP_MOTORS_FRAME_DECA_ENABLED
         case MOTOR_FRAME_DECA:
             _mav_type = MAV_TYPE_DECAROTOR;
             _frame_class_string = "DECA";
@@ -1204,7 +1215,7 @@ void AP_MotorsMatrix::setup_motors(motor_frame_class frame_class, motor_frame_ty
                     break;
             }
             break;
-#endif //FRAME_DECA
+#endif //AP_MOTORS_FRAME_DECA_ENABLED
         default:
             // matrix doesn't support the configured class
             _frame_class_string = "UNSUPPORTED";
