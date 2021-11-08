@@ -250,14 +250,14 @@ PD6 SDMMC2_CK SDMMC2
 PD7 SDMMC2_CMD SDMMC2
  
 # red LED marked as B/E
-PE3 LED_RED OUTPUT OPENDRAIN GPIO(90)
+PE5 LED_RED OUTPUT OPENDRAIN GPIO(90)
 
 # green LED marked as PWR. We leave this solid on, but allow
 # for it to be controlled as a relay if needed
 PE4 LED_GREEN OUTPUT GPIO(91) LOW
 
 # blue LED marked as ACT
-PE5 LED_BLUE OUTPUT GPIO(92) HIGH
+PE3 LED_BLUE OUTPUT GPIO(92) HIGH
 
 # setup for BoardLED2
 define HAL_GPIO_A_LED_PIN 90
